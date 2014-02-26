@@ -6,7 +6,13 @@
 
 Retrieves a list of tvitis sent to or from a particular user, ordered by ```updated_at```, by latest first.
 
-```:filter``` can be one of ```from```, ```to```, ```archived_from``` or ```archived_to```
+```:filter``` can be one of ```from```, ```to```, ```archived_from```, ```archived_to``` or ```archived```
+
+* ```from``` retrieves all non-archived tvitis sent to this user **from** any other user
+* ```to``` retrieves all non-archived tvitis sent from this use **to** any other user
+* ```archived_from``` retrieves all archived tvitis sent to this user **from** any other user
+* ```archived_to``` retrieves all archived tvitis sent from this user **to** any other user
+* ```archived``` retrieves all archived tvitis sent **to or from** this user
 
 Sample response:
 
