@@ -227,7 +227,7 @@ Sample response:
 
 ### PUT /api/v1.0/tviti/```:tviti_id```
 
-Updates a tviti. 
+Updates a tviti. In addition to the usual tviti attributes, you can specify ```by_id``` when updating the ```status```. This should be the ```id``` of either the **to** or **from** user. If you don't specify a ```by_id```, the API will assume the **from** user is initiating the update, but in that case it will *not* store the **from** user's ```id``` in the status's ```by_id``` attribute.
 
 Sample request:
 
@@ -235,6 +235,8 @@ Sample request:
 {
     "tviti": {
         "deadline": "2014-02-13T00:00:00+00:00",
+        status: 4,
+        by_id: "52f8b9d33433640002000000"
     }
 }
 ```
@@ -273,6 +275,16 @@ Sample response:
                 },
                 "created_at": "2014-02-15T16:33:16.444Z",
                 "status": 1
+            },
+            {
+                "_id": {
+                    "$oid": "52ff96cc546f623159020000"
+                },
+                "created_at": "2014-02-15T16:33:16.444Z",
+                "status": 4,
+                "by_id": {
+                  "$oid": "52f8b9d33433640002000000"  
+                }
             }
         ],
         "deleted": false,
@@ -329,6 +341,8 @@ Sample response:
             "$oid": "52cfdca33838370002010000"
         },
         "user_email": "jon@email.com",
+        "user_first_name": "Jon",
+        "user_last_name": "Williams",
         "from_count": 1,
         "archived_from_count": 1,
         "to_count": 0,
@@ -454,4 +468,30 @@ Sample response:
 }
 ```
 
+# Messages configuration
 
+The texts pushed to the notes array and used for push notifications are stored in [/config/locales/en.yml](/config/locales/en.yml).
+
+For **notes**, the format is:
+
+```
+en:
+  notes:
+    status-x:
+      by_from: "Message containing the to user's name: %{to_first_name} %{to_last_name"
+      by_to: "Message containing the tviti name: %{tviti_name}"
+```
+
+where ```x``` is the numerical status code. Leaving out a ```by_from``` or ```by_to``` will mean that the notes array is not updated when the *from* or *to* user updates a tviti to the relevant status, as applicable.
+
+For **push notifications**, the format is:
+
+```
+en:
+  notifications:
+    status-x:
+      for_to: "Message containing the to user's name: %{to_first_name} %{to_last_name"
+      for_from: "Message containing the tviti name: %{tviti_name}"
+```
+
+where ```x``` is the numerical status code. Leaving out a ```for_to``` or ```for_from``` will mean that a push notification is not sent to the *to* or *from* user when the tviti's is updated to the relevant status, as applicable.
