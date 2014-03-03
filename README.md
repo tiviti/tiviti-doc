@@ -353,7 +353,7 @@ Sample response:
 
 ### POST /api/v1.0/users
 
-Creates a user.
+Creates a user. Either a ```password``` **or** a ```google_access_token``` is required.
 
 Sample request:
 
@@ -364,7 +364,10 @@ Sample request:
         "first_name": "John",
         "last_name": "Doe",
         "password": "s3cret",
-        "password_confirmation": "s3cret"
+        "password_confirmation": "s3cret",
+        "google_access_token": "qwertyuiop",
+        "image_profile": "12345",
+        "device_tokens": ["abcdef0123","0123abcdef"]
     }
 }
 ```
@@ -467,6 +470,41 @@ Sample response:
     }
 }
 ```
+
+## Device tokens
+
+As well as updating the ```device_tokens``` attribute of the *User* directly, you can add and remove individual device_tokens using this API:
+
+
+### POST /api/v1.0/users/:user_id/device_tokens
+
+For a specific user, adds a device token if it doesn't already exist.
+
+Sample request:
+
+```
+{
+    "device_token": "fedcba54321"
+}
+```
+
+The response will be 201 Created (with no content) regardless of whether the device token has been successfully added, or already existed for that user. 
+
+
+### DELETE /api/v1.0/users/:user_id/device_tokens/:device_token
+
+For a specific user, removes a device token if it exists.
+
+Sample request: 
+
+```
+DELETE /api/v1.0/users/123/device_tokens/fedcba54321
+```
+
+No payload is required or permitted.
+
+The response will be 204 No Content regardless of whether the device token has been successfully removed, or didn't exist to start with. 
+
 
 # Messages configuration
 
