@@ -331,6 +331,9 @@ Sample response:
             "$oid": "52f8b9d33433640002000000"
         },
         "user_email": "elaine-edwards@mac.com",
+        "user_first_name": "Elaine",
+        "user_last_name": "Edwards",
+        "user_image_profile": "http://domain.com/image_path",
         "from_count": 0,
         "archived_from_count": 1,
         "to_count": 2,
@@ -343,6 +346,7 @@ Sample response:
         "user_email": "jon@email.com",
         "user_first_name": "Jon",
         "user_last_name": "Williams",
+        "user_image_profile": "http://domain.com/image_path_2",
         "from_count": 1,
         "archived_from_count": 1,
         "to_count": 0,
