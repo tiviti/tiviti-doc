@@ -355,6 +355,8 @@ Sample response:
 
 Creates a user. Either a ```password``` **or** a ```google_access_token``` is required.
 
+If a user already exists with the email address, the existing user will be updated. *This needs to be secured.*
+
 Sample request:
 
 ```
