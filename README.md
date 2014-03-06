@@ -9,7 +9,8 @@ Retrieves an array of tvitis sent to or from a particular user, ordered by ```up
 ```:filter``` can be one of ```from```, ```to```, ```archived_from```, ```archived_to``` or ```archived```
 
 * ```from``` retrieves all non-archived tvitis sent to this user **from** any other user
-* ```to``` retrieves all non-archived tvitis sent from this use **to** any other user
+* ```to``` retrieves all non-archived tvitis sent from this user **to** any other user
+* ```all``` retrieves all non-archived tvitis sent **to or from** this user **to or from** any other user
 * ```archived_from``` retrieves all archived tvitis sent to this user **from** any other user
 * ```archived_to``` retrieves all archived tvitis sent from this user **to** any other user
 * ```archived``` retrieves all archived tvitis sent **to or from** this user
@@ -29,12 +30,14 @@ Sample response:
             "from_email": "user1@gmail.com",
             "from_first_name": "calvin",
             "from_last_name": "mayer",
+            "from_image_profile": "http://domain.com/image_path1.jpg",
             "to_id": {
                 "$oid": "52f8b9d33433640002000000"
             },
             "to_email": "user2@mac.com",
             "to_first_name": null,
             "to_last_name": null,
+            "to_image_profile": "http://domain.com/image_path2.jpg",
             "created_at": "2014-02-11T12:52:13.932Z",
             "updated_at": "2014-02-15T16:13:12.924Z",
             "name": "abcde",
@@ -67,6 +70,7 @@ Retrieves an array of tvitis sent to or from a particular user (user1 above), to
 
 * ```from``` retrieves all non-archived tvitis sent to user1 **from** user2
 * ```to``` retrieves all non-archived tvitis sent from user1 **to** user2
+* ```all``` retrieves all non-archived tvitis sent from user1 **to** user2, or to user1 **from** user2
 * ```archived_from``` retrieves all archived tvitis sent to user1 **from** user2
 * ```archived_to``` retrieves all archived tvitis sent from user1 **to** user2
 * ```archived``` retrieves all tvitis sent from user1 to user2 and archived by user2, and all tvitis sent from user2 to user1 and archived by user1
@@ -86,12 +90,14 @@ Sample response:
             "from_email": "user1@gmail.com",
             "from_first_name": "calvin",
             "from_last_name": "mayer",
+            "from_image_profile": "http://domain.com/image_path1.jpg",
             "to_id": {
                 "$oid": "52f8b9d33433640002000000"
             },
             "to_email": "user2@mac.com",
             "to_first_name": null,
             "to_last_name": null,
+            "to_image_profile": "http://domain.com/image_path1.jpg",
             "created_at": "2014-02-11T12:52:13.932Z",
             "updated_at": "2014-02-15T16:13:12.924Z",
             "name": "abcde",
