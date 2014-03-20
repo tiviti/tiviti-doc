@@ -14,6 +14,10 @@ Retrieves an array of tvitis sent to or from a particular user, ordered by ```up
 * ```archived_from``` retrieves all archived tvitis sent to this user **from** any other user
 * ```archived_to``` retrieves all archived tvitis sent from this user **to** any other user
 * ```archived``` retrieves all archived tvitis sent **to or from** this user
+* ```important``` retrieves all tvitis:
+  * sent **to** this user with a current status of **1** (new)
+  * sent **from** this user with a current status of **4** (can't help)
+  * sent **to or from** this user with an overdue deadline and a current status **not** of **5** (complete)
 
 Sample response:
 
@@ -231,6 +235,71 @@ Sample response:
 }
 ```
 
+### POST /api/v1.0/tviti/`:tviti_id`/note
+
+Creates a note. A `by_id` and `text` must be provided inside a `note` attribute. The `by_id` identifies the user creating the note.
+
+Sample request:
+
+```
+{
+    "note": {
+        "by_id": "52f14a26e4b07113cb493147",
+        "text": "Making a note"
+    }
+}
+```
+
+Sample response:
+
+```
+{
+    "tviti": {
+        "id": {
+            "$oid": "52ff96cc546f623159000000"
+        },
+        "from_id": {
+            "$oid": "52f14a26e4b07113cb493147"
+        },
+        "from_email": "user1@gmail.com",
+        "from_first_name": "calvin",
+        "from_last_name": "mayer",
+        "to_id": {
+            "$oid": "52f8b9d33433640002000000"
+        },
+        "to_email": "user2@mac.com",
+        "to_first_name": null,
+        "to_last_name": null,
+        "created_at": "2014-02-15T16:33:16.452Z",
+        "updated_at": "2014-02-15T16:33:16.457Z",
+        "name": "12345",
+        "description": "abcde",
+        "status": 1,
+        "deadline": "2014-02-11T00:00:00+00:00",
+        "notes": [
+            {
+                "by_id": {
+                    "$oid": "52f14a26e4b07113cb493147"
+                },
+                text: "Making a note"
+            }
+        ],
+        "status_history": [
+            {
+                "_id": {
+                    "$oid": "52ff96cc546f623159010000"
+                },
+                "created_at": "2014-02-15T16:33:16.444Z",
+                "status": 1
+            }
+        ],
+        "deleted": false,
+        "archived_to": false,
+        "archived_from": false
+    }
+}
+```
+
 ### PUT /api/v1.0/tviti/```:tviti_id```
 
 Updates a tviti. In addition to the usual tviti attributes, you can specify ```by_id``` when updating the ```status```. This should be the ```id``` of either the **to** or **from** user. If you don't specify a ```by_id```, the API will assume the **from** user is initiating the update, but in that case it will *not* store the **from** user's ```id``` in the status's ```by_id``` attribute.
@@ -300,6 +369,16 @@ Sample response:
 }
 ```
 
+### POST /api/v1.0/tviti/`:tviti_id`/poke
+
+Pokes the 'to' user. No attributes are permitted, and a successful request will result in an HTTP 201 (Created) response.
+
+
+### POST /api/v1.0/tviti/`:tviti_id`/thank
+
+Thanks the 'to' user. No attributes are permitted, and a successful request will result in an HTTP 201 (Created) response.
+
+
 ## Users
 
 ### GET /api/v1.0/users/```:user_id```
@@ -326,7 +405,7 @@ Sample response:
 
 ### GET /api/v1.0/users/```:user_id```/stats
 
-Gets tviti stats for a single user. Response is an array of objects, each representing a single user which the specified ```:user_id``` has sent or received tvitis to or from.
+Gets tviti stats for a single user. Response is an array of objects, each representing a single user which the specified ```:user_id``` has sent or received tvitis to or from. The array will be ordered by the number of 'open' (i.e. not archived) items between each user and the user referenced by `:user_id`, in descending order.
 
 Sample response:
 
