@@ -239,6 +239,8 @@ Sample response:
 
 Creates a note. A `by_id` and `text` must be provided inside a `note` attribute. The `by_id` identifies the user creating the note.
 
+When a new note is created, the `chat_viewed_from` or `chat_viewed_to` field on the associated Tviti will be marked `false` according to the user identified by `by_id`. For example, if the `by_id` refers to the 'from' user, `chat_viewed_to` will become false, and vice-versa.
+
 Sample request:
 
 ```
@@ -364,7 +366,9 @@ Sample response:
         ],
         "deleted": false,
         "archived_to": false,
-        "archived_from": false
+        "archived_from": false,
+        "chat_viewed_to": false,
+        "chat_viewed_from": false
     }
 }
 ```
